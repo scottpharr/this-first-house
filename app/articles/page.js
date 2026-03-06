@@ -1,3 +1,4 @@
+import { getAllArticles } from '@/lib/wordpress';
 import NewsletterCallout from '@/app/components/NewsletterCallout';
 import HomeNav from '@/app/components/HomeNav';
 import Footer from '@/app/components/Footer';
@@ -7,45 +8,28 @@ export const metadata = {
   title: 'Learn | This First House',
 };
 
-const CATEGORIES = [
-  { id: 'house-hunting',   label: 'House Hunting',       description: 'Learn how to navigate today\'s market to find the perfect fit' },
-  { id: 'buying-process',  label: 'The Buying Process',  description: 'Everything you need to know from offer to closing day' },
-  { id: 'moving-settling', label: 'Moving & Settling In', description: 'Make your new house feel like home from day one' },
-  { id: 'home-maintenance', label: 'Home Maintenance',   description: 'Keep your home running smoothly with expert tips and how-tos' },
-];
+export default async function LearnPage() {
+  const allArticles = await getAllArticles();
 
-const ARTICLES = {
-  'house-hunting': [
-    { id: 1,  type: 'Uncategorized',           title: 'Should You Buy That Fixer-Upper?',            image: '/article1.jpg', slug: 'how-to-change-a-toilet' },
-    { id: 2,  type: 'Article',               title: "Just Want Some Space? Here's How to Find It", image: '/article2.jpg' },
-    { id: 3,  type: "Homeowner's Handbook",  title: '10 Things to Look for in a Real Estate Agent', image: '/article3.jpg' },
-    { id: 4,  type: 'Article',               title: 'How to Win a Bidding War in a Hot Market',    image: '/article4.jpg' },
-    { id: 5,  type: 'Guide',                 title: 'Understanding Mortgage Pre-Approval',          image: '/article1.jpg' },
-  ],
-  'buying-process': [
-    { id: 6,  type: 'Article',   title: 'What Happens at Closing?',                  image: '/article2.jpg' },
-    { id: 7,  type: 'Guide',     title: 'Home Inspection 101',                        image: '/article3.jpg' },
-    { id: 8,  type: 'Article',   title: 'How to Read a Home Disclosure Statement',   image: '/article4.jpg' },
-    { id: 9,  type: 'Checklist', title: 'Documents You\'ll Need to Buy a Home',      image: '/article1.jpg' },
-    { id: 10, type: 'Article',   title: 'Making a Competitive Offer in Any Market',  image: '/article2.jpg' },
-  ],
-  'moving-settling': [
-    { id: 11, type: 'Article',   title: 'Your First Week in a New Home',                          image: '/article3.jpg' },
-    { id: 12, type: 'Guide',     title: 'Setting Up Utilities: A Room-by-Room Checklist',         image: '/article4.jpg' },
-    { id: 13, type: 'Tips',      title: '10 Things to Do Before You Unpack',                      image: '/article1.jpg' },
-    { id: 14, type: 'Article',   title: 'How to Change the Locks on Your New Home',               image: '/article2.jpg' },
-    { id: 15, type: 'Checklist', title: 'New Homeowner Setup Checklist',                           image: '/article3.jpg' },
-  ],
-  'home-maintenance': [
-    { id: 16, type: 'Seasonal Guide', title: 'Your Complete Fall Home Maintenance Checklist',     image: '/article4.jpg' },
-    { id: 17, type: 'How-To',         title: 'How to Fix a Leaky Faucet in 30 Minutes',           image: '/article1.jpg' },
-    { id: 18, type: 'Article',        title: 'Signs You Need to Replace Your Water Heater',       image: '/article2.jpg' },
-    { id: 19, type: 'Checklist',      title: 'Monthly Tasks Every Homeowner Should Do',           image: '/article3.jpg' },
-    { id: 20, type: 'How-To',         title: 'How to Change a Toilet',                            image: '/article4.jpg', slug: 'how-to-change-a-toilet' },
-  ],
-};
+  // Derive unique categories from real articles (preserving first-seen order)
+  const seen = new Set();
+  const categories = [];
+  for (const article of allArticles) {
+    for (const cat of article.categories?.nodes ?? []) {
+      if (!seen.has(cat.slug)) {
+        seen.add(cat.slug);
+        categories.push({ id: cat.slug, label: cat.name, description: '' });
+      }
+    }
+  }
 
-export default function LearnPage() {
+  // Group articles by category slug
+  const articlesByCategory = {};
+  for (const cat of categories) {
+    articlesByCategory[cat.id] = allArticles.filter((a) =>
+      a.categories?.nodes?.some((c) => c.slug === cat.id)
+    );
+  }
   return (
     <>
       <HomeNav active="Learn" />
@@ -89,7 +73,7 @@ export default function LearnPage() {
         {/* ── Category jump links ── */}
         <div className="px-5 md:px-8" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
           <div className="max-w-[1280px] mx-auto flex gap-3 justify-center">
-            {CATEGORIES.map((cat, i) => (
+            {categories.map((cat, i) => (
               <a
                 key={cat.id}
                 href={`#${cat.id}`}
@@ -117,7 +101,7 @@ export default function LearnPage() {
 
         {/* ── Article sections ── */}
         <div style={{ paddingTop: '36px', paddingBottom: '60px' }}>
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <section
               key={cat.id}
               id={cat.id}
@@ -135,7 +119,7 @@ export default function LearnPage() {
               </div>
 
               <div className="px-5 md:px-8 max-w-[1280px] mx-auto">
-                <ArticleCarousel articles={ARTICLES[cat.id]} />
+                <ArticleCarousel articles={articlesByCategory[cat.id] ?? []} />
               </div>
             </section>
           ))}

@@ -16,62 +16,66 @@ export default function ArticleCarousel({ articles }) {
         className="flex gap-5 overflow-x-auto scrollbar-hide"
         style={{ scrollSnapType: 'x mandatory' }}
       >
-        {articles.map((article) => (
-          <div
-            key={article.id}
-            className="flex-shrink-0 flex flex-col"
-            style={{ width: '400px', scrollSnapAlign: 'start' }}
-          >
-            {/* Image placeholder */}
-            {(() => {
-              const colors = ['#D9D9E8', '#C8D8E8', '#D8E4D0', '#E8DDD0', '#D0D8E8'];
-              const href = article.slug ? `/articles/${article.slug}` : '#';
-              return (
-                <Link href={href} className="block hover:opacity-90 transition-opacity">
-                  <div
-                    className="w-full rounded-[6px]"
-                    style={{ height: '225px', background: colors[article.id % colors.length] }}
-                  />
-                </Link>
-              );
-            })()}
+        {articles.map((article, i) => {
+          const colors = ['#D9D9E8', '#C8D8E8', '#D8E4D0', '#E8DDD0', '#D0D8E8'];
+          const href = `/articles/${article.slug}`;
+          const category = article.categories?.nodes?.[0]?.name;
+          const image = article.featuredImage?.node?.sourceUrl;
+          return (
+            <div
+              key={article.slug}
+              className="flex-shrink-0 flex flex-col"
+              style={{ width: '400px', scrollSnapAlign: 'start' }}
+            >
+              {/* Image */}
+              <Link href={href} className="block hover:opacity-90 transition-opacity">
+                <div
+                  className="w-full rounded-[6px] overflow-hidden"
+                  style={{ height: '225px', background: colors[i % colors.length] }}
+                >
+                  {image && (
+                    <img src={image} alt={article.featuredImage.node.altText || article.title} className="w-full h-full object-cover" />
+                  )}
+                </div>
+              </Link>
 
-            {/* Badge */}
-            <div style={{ marginTop: '12px' }}>
-              <span
-                style={{
-                  display: 'inline-block',
-                  padding: '3px 10px',
-                  border: '0.5px solid #C85900',
-                  borderRadius: '4px',
-                  fontSize: '10px',
-                  fontWeight: 400,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: '#C85900',
-                }}
+              {/* Badge */}
+              {category && (
+                <div style={{ marginTop: '12px' }}>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      padding: '3px 10px',
+                      border: '0.5px solid #C85900',
+                      borderRadius: '4px',
+                      fontSize: '10px',
+                      fontWeight: 400,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: '#C85900',
+                    }}
+                  >
+                    {category}
+                  </span>
+                </div>
+              )}
+
+              {/* Title */}
+              <h3 style={{ marginTop: '8px', fontSize: '17px', fontWeight: 700, lineHeight: '1.3', color: '#111111' }}>
+                {article.title}
+              </h3>
+
+              {/* Read More */}
+              <Link
+                href={href}
+                style={{ display: 'inline-block', marginTop: '6px', fontSize: '13px', fontWeight: 500, color: '#393997', textDecoration: 'underline', textUnderlineOffset: '2px' }}
+                className="hover:opacity-70 transition-opacity"
               >
-                {article.type}
-              </span>
+                Read More
+              </Link>
             </div>
-
-            {/* Title */}
-            <h3
-              style={{ marginTop: '8px', fontSize: '17px', fontWeight: 700, lineHeight: '1.3', color: '#111111' }}
-            >
-              {article.title}
-            </h3>
-
-            {/* Read More */}
-            <Link
-              href={article.slug ? `/articles/${article.slug}` : '#'}
-              style={{ display: 'inline-block', marginTop: '6px', fontSize: '13px', fontWeight: 500, color: '#393997', textDecoration: 'underline', textUnderlineOffset: '2px' }}
-              className="hover:opacity-70 transition-opacity"
-            >
-              Read More
-            </Link>
-          </div>
-        ))}
+          );
+        })}
 
         {/* Trailing spacer */}
         <div className="flex-shrink-0 w-4" />
