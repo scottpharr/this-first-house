@@ -1,5 +1,4 @@
 import NewsletterCallout from '@/app/components/NewsletterCallout';
-import HomeownersGuide from '@/app/components/HomeownersGuide';
 import HomeNav from '@/app/components/HomeNav';
 import Footer from '@/app/components/Footer';
 import ArticleCarousel from './ArticleCarousel';
@@ -112,32 +111,27 @@ export default function LearnPage() {
 
         {/* ── Article sections ── */}
         <div style={{ paddingTop: '36px', paddingBottom: '60px' }}>
-          {CATEGORIES.map((cat, i) => (
-            <>
-              <section
-                key={cat.id}
-                id={cat.id}
-                style={{ marginBottom: '52px' }}
-              >
-                <div className="px-5 md:px-8 max-w-[1280px] mx-auto">
-                  <h2
-                    style={{ fontSize: '36px', fontWeight: 700, color: '#020259', lineHeight: 1.1, letterSpacing: '-0.02em' }}
-                  >
-                    {cat.label}
-                  </h2>
-                  <p style={{ marginTop: '6px', marginBottom: '18px', fontSize: '13px', color: '#888888' }}>
-                    {cat.description}
-                  </p>
-                </div>
+          {CATEGORIES.map((cat) => (
+            <section
+              key={cat.id}
+              id={cat.id}
+              style={{ marginBottom: '52px' }}
+            >
+              <div className="px-5 md:px-8 max-w-[1280px] mx-auto">
+                <h2
+                  style={{ fontSize: '36px', fontWeight: 700, color: '#020259', lineHeight: 1.1, letterSpacing: '-0.02em' }}
+                >
+                  {cat.label}
+                </h2>
+                <p style={{ marginTop: '6px', marginBottom: '18px', fontSize: '13px', color: '#888888' }}>
+                  {cat.description}
+                </p>
+              </div>
 
-                <div className="px-5 md:px-8 max-w-[1280px] mx-auto">
-                  <ArticleCarousel articles={ARTICLES[cat.id]} />
-                </div>
-              </section>
-
-              {/* HomeownersGuide between 2nd and 3rd sections */}
-              {i === 1 && <div style={{ marginBottom: '40px' }}><HomeownersGuide compact /></div>}
-            </>
+              <div className="px-5 md:px-8 max-w-[1280px] mx-auto">
+                <ArticleCarousel articles={ARTICLES[cat.id]} />
+              </div>
+            </section>
           ))}
         </div>
 
