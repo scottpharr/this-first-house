@@ -63,7 +63,13 @@ export default function LearnPage() {
         {/* Gradient — fade to navy on left and right */}
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(to right, #11114A 0%, rgba(17,17,74,0.8) 35%, rgba(17,17,74,0) 50%, rgba(17,17,74,0.8) 65%, #11114A 100%)' }}
+          style={{ background: 'linear-gradient(to right, #11114A 0%, #11114A 8%, rgba(17,17,74,0.85) 22%, rgba(17,17,74,0) 38%, rgba(17,17,74,0) 62%, rgba(17,17,74,0.85) 78%, #11114A 92%, #11114A 100%)' }}
+        />
+
+        {/* Top fade */}
+        <div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(180deg, #11114A 0%, rgba(17,17,74,0.7) 15%, rgba(17,17,74,0) 35%)' }}
         />
 
         {/* Hero text — 129px from left, 241px from top */}

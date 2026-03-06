@@ -32,10 +32,10 @@ export default function HomeNav({ active = '', solid = false }) {
 
         <div className="hidden md:flex items-center gap-[30px]">
           {[
-            { label: 'Watch',             href: '#' },
+            { label: 'Watch',             href: '/watch' },
             { label: 'Learn',             href: '/articles' },
-            { label: "Homeowner's Guide", href: '#' },
-            { label: 'About',             href: '#' },
+            { label: "Homeowner's Guide", href: '/homeowners-guide' },
+            { label: 'About',             href: '/about' },
           ].map(({ label, href }) => (
             <a
               key={label}

@@ -96,7 +96,7 @@ export default async function ArticlePage({ params }) {
       <main className="bg-white" style={{ color: '#222222', paddingTop: '100px' }}>
 
         {/* Breadcrumb — 20px from nav, 40px above content */}
-        <div className="px-5 md:px-8" style={{ paddingTop: '0', paddingBottom: '0' }}>
+        <div className="px-5 md:px-8" style={{ paddingTop: '20px', paddingBottom: '0' }}>
           <div className="article-layout">
             <div className="article-main flex items-center gap-2 text-sm" style={{ color: '#999' }}>
               <a href="/" className="hover:text-[#FF7100] transition-colors">Home</a>

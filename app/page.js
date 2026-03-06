@@ -18,20 +18,20 @@ function PlayIcon() {
 
 function Hero() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#11114A] h-[600px] md:h-[900px]">
+    <section className="relative w-full overflow-hidden bg-[#11114A]" style={{ height: '564px' }}>
 
       {/* Hero photo */}
       <img
         src="/hero-photo-opt.jpg"
         alt="Crystal and Jorge"
-        className="absolute inset-0 w-full h-full object-cover object-left"
+        className="absolute inset-0 w-full h-full object-contain object-left"
       />
 
       {/* Gradient: right side fades photo to navy (reduced 50%) */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to right, rgba(17,17,74,0) 30%, rgba(17,17,74,0.35) 55%, rgba(17,17,74,0.5) 75%)',
+          background: 'linear-gradient(to right, rgba(17,17,74,0) 30%, rgba(17,17,74,0.15) 55%, rgba(17,17,74,0.25) 75%)',
         }}
       />
 
@@ -55,7 +55,7 @@ function Hero() {
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 40%)',
+          background: 'linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 40%)',
         }}
       />
 
