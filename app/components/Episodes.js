@@ -58,7 +58,7 @@ export default function Episodes() {
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                background: 'linear-gradient(180deg, rgba(255,255,255,0) 11.06%, rgba(102,102,102,0.7) 37.5%, #000000 86.06%)',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0) 11.06%, rgba(102,102,102,0.3) 37.5%, rgba(0,0,0,0.55) 86.06%)',
                 mixBlendMode: 'multiply',
               }}
             />

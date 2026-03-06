@@ -18,7 +18,7 @@ function PlayIcon() {
 
 function Hero() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#11114A]" style={{ height: '564px' }}>
+    <section className="relative w-full overflow-hidden bg-[#11114A]" style={{ height: '80vh' }}>
 
       {/* Hero photo */}
       <img
