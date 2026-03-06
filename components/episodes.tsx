@@ -3,39 +3,39 @@ import { Play } from "lucide-react"
 const episodes = [
   {
     id: 1,
-    title: "First Timer's Club",
-    episode: "Season 1, Episode 1",
+    title: "First Timers Club",
+    episode: "Episode 01",
     image: "/placeholder-ep1.jpg",
     featured: true,
   },
   {
     id: 2,
-    title: "Reality Sets In",
-    episode: "Season 1, Episode 2",
+    title: "Reality Sinks In",
+    episode: "Episode 02",
     image: "/placeholder-ep2.jpg",
   },
   {
     id: 3,
-    title: "Clear to Close",
-    episode: "Season 1, Episode 3",
+    title: "Don't Wait",
+    episode: "Episode 03",
     image: "/placeholder-ep3.jpg",
   },
   {
     id: 4,
-    title: "Do It Right",
-    episode: "Season 1, Episode 4",
+    title: "Cut High",
+    episode: "Episode 04",
     image: "/placeholder-ep4.jpg",
   },
   {
     id: 5,
-    title: "Home Wasn't Built in a Day",
-    episode: "Season 1, Episode 5",
+    title: "Curb Appeal Battles Buy-in",
+    episode: "Episode 05",
     image: "/placeholder-ep5.jpg",
   },
   {
     id: 6,
-    title: "Move Masterclass",
-    episode: "Season 1, Episode 6",
+    title: "News Renovator's Bite",
+    episode: "Episode 06",
     image: "/placeholder-ep6.jpg",
   },
 ]
@@ -50,30 +50,30 @@ export function Episodes() {
         Episodes
       </h2>
 
-      <div className="flex flex-col lg:flex-row gap-4 lg:gap-4">
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-3">
         {/* Featured Episode */}
-        <div className="lg:w-2/3 relative rounded-xl overflow-hidden group cursor-pointer">
-          <div className="aspect-video lg:aspect-[846/521] bg-navy relative">
+        <div className="lg:w-[65%] relative rounded-xl overflow-hidden group cursor-pointer">
+          <div className="aspect-video bg-navy relative">
             <img
               src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=846&h=521&fit=crop"
               alt={featuredEpisode.title}
               className="w-full h-full object-cover"
             />
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
             {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-10 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-3">
+            <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6 flex items-end justify-between gap-3">
               <div>
-                <h3 className="text-xl lg:text-3xl font-bold text-white mb-1 lg:mb-2">
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-0.5">
                   {featuredEpisode.title}
                 </h3>
-                <p className="text-white/80 text-xs lg:text-sm tracking-wide">
+                <p className="text-white/70 text-xs uppercase tracking-wider">
                   {featuredEpisode.episode}
                 </p>
               </div>
-              <button className="flex items-center gap-2 border border-white text-white font-bold uppercase text-xs lg:text-sm px-4 lg:px-6 py-2 lg:py-3 rounded-xl hover:bg-white/10 transition-colors">
-                <Play size={14} fill="white" />
+              <button className="flex items-center gap-2 border border-white text-white font-semibold uppercase text-xs px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                <Play size={12} fill="white" />
                 Watch Now
               </button>
             </div>
@@ -81,16 +81,16 @@ export function Episodes() {
         </div>
 
         {/* Episode List - Hidden on mobile */}
-        <div className="hidden lg:flex lg:w-1/3 flex-col gap-3">
+        <div className="hidden lg:flex lg:w-1/3 flex-col gap-1">
           {episodeList.map((ep, index) => (
             <div
               key={ep.id}
-              className={`flex items-center gap-4 p-1.5 rounded-lg cursor-pointer hover:bg-light-orange/50 transition-colors ${
+              className={`flex items-center gap-3 p-1.5 pr-3 rounded-lg cursor-pointer hover:bg-light-orange/50 transition-colors ${
                 index === 0 ? "bg-light-orange" : ""
               }`}
             >
               {/* Thumbnail */}
-              <div className="relative w-28 lg:w-32 aspect-video rounded-md overflow-hidden flex-shrink-0 bg-black">
+              <div className="relative w-24 aspect-video rounded-md overflow-hidden flex-shrink-0 bg-gray-200">
                 <img
                   src={`https://images.unsplash.com/photo-156051888${index + 1}-ce09059eeffa?w=126&h=71&fit=crop`}
                   alt={ep.title}
@@ -98,18 +98,18 @@ export function Episodes() {
                 />
                 {/* Play Button */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-9 h-9 rounded-full bg-white/80 flex items-center justify-center shadow-lg">
-                    <Play size={14} fill="black" className="text-black ml-0.5" />
+                  <div className="w-7 h-7 rounded-full bg-white/90 flex items-center justify-center shadow">
+                    <Play size={12} fill="#11114A" className="text-navy ml-0.5" />
                   </div>
                 </div>
               </div>
 
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <h4 className="font-semibold text-black text-base lg:text-lg capitalize truncate">
+                <h4 className="font-semibold text-dark-blue text-sm leading-tight mb-0.5 line-clamp-2">
                   {ep.title}
                 </h4>
-                <p className="text-gray-500 text-xs capitalize">{ep.episode}</p>
+                <p className="text-gray-400 text-xs">{ep.episode}</p>
               </div>
             </div>
           ))}
