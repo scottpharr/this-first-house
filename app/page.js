@@ -105,6 +105,7 @@ export default async function Home() {
       <HomeNav />
       <Hero />
       <ContentBlock articles={articles} />
+      <div style={{ height: '60px', background: '#fff' }} />
       <HomeownersGuide />
       <VideoShorts />
 

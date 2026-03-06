@@ -25,18 +25,11 @@ export default function ContentBlock({ articles = [] }) {
   const smallCards = filtered.slice(1, 5);
 
   return (
-    <section className="bg-white py-10 md:py-14">
+    <section className="bg-white pt-6 pb-[60px]">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
 
-        {/* Heading + filter bar */}
-        <div className="flex flex-col gap-4 mb-8">
-          <h2
-            className="font-medium"
-            style={{ fontSize: '36px', lineHeight: '39px', letterSpacing: '-0.02em', color: '#050565' }}
-          >
-            Latest Articles
-          </h2>
-
+        {/* Filter bar */}
+        <div className="flex flex-col gap-4 mb-8" style={{ paddingTop: '30px' }}>
           {/* Category tabs */}
           <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
             {categories.map((cat) => {
