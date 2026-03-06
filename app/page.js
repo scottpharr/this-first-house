@@ -1,23 +1,12 @@
 import Link from 'next/link';
 import { getAllArticles } from '@/lib/wordpress';
+import HomeNav from './components/HomeNav';
 import Episodes from './components/Episodes';
 import HomeownersGuide from './components/HomeownersGuide';
 import VideoShorts from './components/VideoShorts';
 import ContentBlock from './components/ContentBlock';
-
-function TFHLogo() {
-  return (
-    <img src="/flat-logo.svg" alt="This First House" className="w-[110px] md:w-[165px] h-auto" />
-  );
-}
-
-function SocialIcon({ href, src, alt, width, height }) {
-  return (
-    <a href={href} aria-label={alt} className="flex items-center justify-center opacity-90 hover:opacity-100 transition-opacity">
-      <img src={src} alt={alt} width={width} height={height} />
-    </a>
-  );
-}
+import NewsletterCallout from './components/NewsletterCallout';
+import Footer from './components/Footer';
 
 function PlayIcon() {
   return (
@@ -27,51 +16,9 @@ function PlayIcon() {
   );
 }
 
-function Nav() {
-  return (
-    <nav className="absolute top-0 left-0 right-0 z-10 px-5 md:px-8 py-5 md:py-7">
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center">
-          <TFHLogo />
-        </div>
-
-        {/* Nav links — hidden on mobile */}
-        <div className="hidden md:flex items-center gap-[30px]">
-          {['Watch', 'Learn', "Homeowner's Guide", 'About'].map((link) => (
-            <a
-              key={link}
-              href="#"
-              className="text-white text-[17px] font-medium tracking-[0.05em] hover:text-[#FF7100] transition-colors"
-            >
-              {link}
-            </a>
-          ))}
-        </div>
-
-        {/* Social icons — hidden on mobile */}
-        <div className="hidden md:flex items-center gap-5">
-          <SocialIcon href="#" src="/icon-youtube.png"   alt="YouTube"   width={24} height={24} />
-          <SocialIcon href="#" src="/icon-instagram.png" alt="Instagram" width={24} height={24} />
-          <SocialIcon href="#" src="/icon-tiktok.png"    alt="TikTok"    width={18} height={24} />
-          <SocialIcon href="#" src="/icon-mail.png"      alt="Email"     width={28} height={24} />
-        </div>
-
-        {/* Hamburger — mobile only */}
-        <button className="flex md:hidden flex-col gap-[5px] p-1" aria-label="Menu">
-          <span className="block w-6 h-0.5 bg-white rounded" />
-          <span className="block w-6 h-0.5 bg-white rounded" />
-          <span className="block w-6 h-0.5 bg-white rounded" />
-        </button>
-      </div>
-    </nav>
-  );
-}
-
 function Hero() {
   return (
     <section className="relative w-full overflow-hidden bg-[#11114A] h-[600px] md:h-[900px]">
-      <Nav />
 
       {/* Hero photo */}
       <img
@@ -80,11 +27,11 @@ function Hero() {
         className="absolute inset-0 w-full h-full object-cover object-left"
       />
 
-      {/* Gradient: right side fades photo to navy (where text lives) */}
+      {/* Gradient: right side fades photo to navy (reduced 50%) */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to right, rgba(17,17,74,0) 30%, rgba(17,17,74,0.7) 55%, #11114A 75%)',
+          background: 'linear-gradient(to right, rgba(17,17,74,0) 30%, rgba(17,17,74,0.35) 55%, rgba(17,17,74,0.5) 75%)',
         }}
       />
 
@@ -93,6 +40,14 @@ function Hero() {
         className="absolute inset-0"
         style={{
           background: 'linear-gradient(180deg, rgba(17,17,74,0) 0%, rgba(17,17,74,0.5) 60%, #11114A 95%)',
+        }}
+      />
+
+      {/* Gradient: top fade for nav area */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(180deg, #11114A 0%, rgba(17,17,74,0.6) 15%, rgba(17,17,74,0) 35%)',
         }}
       />
 
@@ -149,22 +104,15 @@ export default async function Home() {
 
   return (
     <main>
+      <HomeNav />
       <Hero />
       <Episodes />
       <HomeownersGuide />
       <VideoShorts />
       <ContentBlock />
 
-      <div className="max-w-[1440px] mx-auto px-5 md:px-8 py-16">
-        {articles.map((article) => (
-          <div key={article.slug}>
-            <Link href={`/articles/${article.slug}`}>
-              <h2>{article.title}</h2>
-            </Link>
-            <p>{article.excerpt}</p>
-          </div>
-        ))}
-      </div>
+      <NewsletterCallout />
+      <Footer />
     </main>
   );
 }

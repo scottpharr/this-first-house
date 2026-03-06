@@ -3,13 +3,13 @@
 import { useState, useRef, useEffect } from 'react';
 
 const SHORTS = [
-  { id: 1, title: 'Holiday Cheer Starts Here', thumb: '/short1-thumb.png' },
-  { id: 2, title: 'Refresh For Fall',           thumb: '/short2-thumb.png' },
-  { id: 3, title: 'Fall Prep Checklist',        thumb: '/short3-thumb.png' },
+  { id: 1, title: 'Holiday Cheer Starts Here', thumb: '/short1-thumb.jpg' },
+  { id: 2, title: 'Refresh For Fall',           thumb: '/short2-thumb.jpg' },
+  { id: 3, title: 'Fall Prep Checklist',        thumb: '/short3-thumb.jpg' },
   { id: 4, title: 'Summer Grilling Tips',       thumb: '/short4-thumb.png' },
   { id: 5, title: 'Garage Storage Tips',        thumb: '/short5-thumb.png' },
-  { id: 6, title: 'First Time Buyer Tips',      thumb: '/short6-thumb.png' },
-  { id: 7, title: 'Budget Kitchen Refresh',     thumb: '/short7-thumb.png' },
+  { id: 6, title: 'First Time Buyer Tips',      thumb: '/short1-thumb.jpg' },
+  { id: 7, title: 'Budget Kitchen Refresh',     thumb: '/short2-thumb.jpg' },
 ];
 
 export default function VideoShorts() {
