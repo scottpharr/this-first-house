@@ -30,16 +30,16 @@ const shorts = [
 
 export function VideoShorts() {
   return (
-    <section className="py-16 lg:py-20 px-6 lg:px-20 bg-white">
-      <h2 className="text-3xl lg:text-4xl font-medium text-dark-blue mb-6 lg:mb-8 capitalize tracking-tight">
+    <section className="py-12 lg:py-20 px-6 lg:px-20 bg-white">
+      <h2 className="text-2xl lg:text-4xl font-medium text-dark-blue mb-4 lg:mb-8 tracking-tight">
         Video Shorts
       </h2>
 
-      <div className="flex gap-4 overflow-x-auto pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 scrollbar-hide">
+      <div className="flex gap-3 lg:gap-4 overflow-x-auto pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 scrollbar-hide">
         {shorts.map((short) => (
           <div
             key={short.id}
-            className="relative flex-shrink-0 w-36 lg:w-44 aspect-[9/16] rounded-xl overflow-hidden cursor-pointer group"
+            className="relative flex-shrink-0 w-28 lg:w-44 aspect-[9/16] rounded-xl overflow-hidden cursor-pointer group"
           >
             <img
               src={short.image}

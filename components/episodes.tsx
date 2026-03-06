@@ -45,43 +45,43 @@ export function Episodes() {
   const episodeList = episodes.slice(0, 6)
 
   return (
-    <section id="episodes" className="py-16 lg:py-20 px-6 lg:px-20 bg-white">
-      <h2 className="text-3xl lg:text-4xl font-medium text-dark-blue mb-6 lg:mb-8 capitalize tracking-tight">
+    <section id="episodes" className="py-12 lg:py-20 px-6 lg:px-20 bg-white">
+      <h2 className="text-2xl lg:text-4xl font-medium text-dark-blue mb-4 lg:mb-8 tracking-tight">
         Episodes
       </h2>
 
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-4">
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-4">
         {/* Featured Episode */}
-        <div className="lg:w-2/3 relative rounded-lg overflow-hidden group cursor-pointer">
-          <div className="aspect-video lg:aspect-[846/521] bg-black relative">
+        <div className="lg:w-2/3 relative rounded-xl overflow-hidden group cursor-pointer">
+          <div className="aspect-video lg:aspect-[846/521] bg-navy relative">
             <img
               src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=846&h=521&fit=crop"
               alt={featuredEpisode.title}
               className="w-full h-full object-cover"
             />
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
 
             {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-10 flex items-end justify-between">
+            <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-10 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-3">
               <div>
-                <h3 className="text-2xl lg:text-3xl font-bold text-white capitalize mb-2">
+                <h3 className="text-xl lg:text-3xl font-bold text-white mb-1 lg:mb-2">
                   {featuredEpisode.title}
                 </h3>
-                <p className="text-white/80 text-sm tracking-wide capitalize">
+                <p className="text-white/80 text-xs lg:text-sm tracking-wide">
                   {featuredEpisode.episode}
                 </p>
               </div>
-              <button className="flex items-center gap-2 border border-white text-white font-bold uppercase text-sm px-6 py-3 rounded-xl hover:bg-white/10 transition-colors">
-                <Play size={16} fill="white" />
+              <button className="flex items-center gap-2 border border-white text-white font-bold uppercase text-xs lg:text-sm px-4 lg:px-6 py-2 lg:py-3 rounded-xl hover:bg-white/10 transition-colors">
+                <Play size={14} fill="white" />
                 Watch Now
               </button>
             </div>
           </div>
         </div>
 
-        {/* Episode List */}
-        <div className="lg:w-1/3 flex flex-col gap-3">
+        {/* Episode List - Hidden on mobile */}
+        <div className="hidden lg:flex lg:w-1/3 flex-col gap-3">
           {episodeList.map((ep, index) => (
             <div
               key={ep.id}
