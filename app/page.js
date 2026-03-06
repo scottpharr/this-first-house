@@ -1,7 +1,5 @@
-import Link from 'next/link';
 import { getAllArticles } from '@/lib/wordpress';
 import HomeNav from './components/HomeNav';
-import Episodes from './components/Episodes';
 import HomeownersGuide from './components/HomeownersGuide';
 import VideoShorts from './components/VideoShorts';
 import ContentBlock from './components/ContentBlock';
@@ -106,10 +104,9 @@ export default async function Home() {
     <main>
       <HomeNav />
       <Hero />
-      <Episodes />
+      <ContentBlock articles={articles} />
       <HomeownersGuide />
       <VideoShorts />
-      <ContentBlock />
 
       <NewsletterCallout />
       <Footer />

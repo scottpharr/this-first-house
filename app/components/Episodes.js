@@ -11,22 +11,113 @@ const EPISODES = [
   { id: 6, title: 'Home Sweet Home',            label: 'Season 1, Episode 6' },
 ];
 
-function PlayCircle({ size = 37.5 }) {
-  return (
-    <div
-      className="absolute inset-0 flex items-center justify-center"
-      style={{ filter: 'drop-shadow(0px 0px 6px rgba(0,0,0,0.35))' }}
-    >
-      <div
-        className="rounded-full flex items-center justify-center"
-        style={{ width: size, height: size, background: 'rgba(255,255,255,0.8)' }}
-      >
-        <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
-          <path d="M0 0L11 6.5L0 13V0Z" fill="black" />
-        </svg>
-      </div>
-    </div>
-  );
+const episodesStyles = `
+  .ep-section { background: #fff; padding: 40px 0 56px; }
+  .ep-inner   { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .ep-heading { font-size: 36px; font-weight: 500; line-height: 39px; letter-spacing: -0.02em; color: #050565; margin-bottom: 24px; }
+
+  /* Desktop: large card + sidebar list */
+  .ep-desktop { display: flex; gap: 15px; height: 521px; }
+  .ep-mobile  { display: none; }
+
+  /* Large card */
+  .ep-main { position: relative; flex: 1; border-radius: 6px; overflow: hidden; background: #000; }
+  .ep-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ep-main-overlay {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 11.06%, rgba(102,102,102,0.3) 37.5%, rgba(0,0,0,0.55) 86.06%);
+    mix-blend-mode: multiply;
+  }
+  .ep-main-info {
+    position: absolute; bottom: 28px; left: 52px; right: 52px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .ep-main-title { color: #fff; font-size: 32px; font-weight: 700; line-height: 31px; text-transform: capitalize; }
+  .ep-main-label { color: #fff; font-size: 13px; font-weight: 300; letter-spacing: 0.05em; margin-top: 8px; }
+  .ep-watch-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 190px; height: 62px; border: 1px solid #fff; border-radius: 14px;
+    background: transparent; color: #fff; font-size: 16px; font-weight: 700;
+    letter-spacing: 0.02em; text-transform: uppercase; cursor: pointer; flex-shrink: 0;
+  }
+  .ep-watch-btn:hover { background: #fff; color: #000; }
+
+  /* Sidebar episode list */
+  .ep-list { display: flex; flex-direction: column; gap: 8px; width: 411px; }
+  .ep-item {
+    display: flex; align-items: center; text-align: left; border: none; cursor: pointer;
+    border-radius: 8px; flex: 1; overflow: hidden; padding: 0 12px 0 6px;
+    background: transparent; transition: background 0.15s;
+  }
+  .ep-item.active { background: #FFEBDB; }
+  .ep-thumb {
+    position: relative; flex-shrink: 0; border-radius: 6px; overflow: hidden;
+    background: #000; width: 126px; height: 71px;
+  }
+  .ep-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ep-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.35));
+  }
+  .ep-play-circle {
+    width: 37.5px; height: 37.5px; border-radius: 50%;
+    background: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center;
+  }
+  .ep-item-title { font-size: 18px; font-weight: 600; color: #000; line-height: 1.2; text-transform: capitalize; margin-left: 15px; }
+  .ep-item-label { font-size: 12px; color: #666; margin-top: 4px; margin-left: 15px; }
+
+  /* Mobile layout */
+  @media (max-width: 767px) {
+    .ep-desktop { display: none; }
+    .ep-mobile  { display: flex; flex-direction: column; gap: 12px; }
+    .ep-mobile-main {
+      position: relative; width: 100%; border-radius: 6px; overflow: hidden;
+      background: #000; height: 240px;
+    }
+    .ep-mobile-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ep-mobile-overlay {
+      position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 30%, rgba(0,0,0,0.7) 100%);
+      mix-blend-mode: multiply;
+    }
+    .ep-mobile-info {
+      position: absolute; bottom: 16px; left: 16px; right: 16px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 8px;
+    }
+    .ep-mobile-title { color: #fff; font-size: 20px; font-weight: 700; line-height: 1.2; text-transform: capitalize; }
+    .ep-mobile-label { color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 300; margin-top: 4px; }
+    .ep-mobile-btn {
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 8px;
+      height: 44px; padding: 0 12px; border: 1px solid #fff; border-radius: 10px;
+      background: transparent; color: #fff; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+    }
+    .ep-scroll { display: flex; flex-direction: row; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    .ep-scroll::-webkit-scrollbar { display: none; }
+    .ep-scroll-item {
+      flex-shrink: 0; display: flex; align-items: center; gap: 8px;
+      border-radius: 8px; overflow: hidden; width: 220px; height: 72px;
+      padding: 0 8px 0 6px; border: none; cursor: pointer; transition: background 0.15s;
+    }
+    .ep-scroll-item.active { background: #FFEBDB; }
+    .ep-scroll-item:not(.active) { background: #F5F5F5; }
+    .ep-scroll-thumb {
+      flex-shrink: 0; position: relative; border-radius: 6px; overflow: hidden;
+      background: #000; width: 100px; height: 60px;
+    }
+    .ep-scroll-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ep-scroll-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .ep-scroll-circle {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center;
+    }
+    .ep-scroll-title { font-size: 13px; font-weight: 600; color: #000; line-height: 1.2; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
+    .ep-scroll-label { font-size: 11px; color: #666; margin-top: 2px; }
+  }
+`;
+
+function thumbSrc(episode) {
+  return episode.id === 1 ? '/ep1-thumb.png' : `/ep${episode.id}-thumb.jpg`;
 }
 
 export default function Episodes() {
@@ -34,47 +125,25 @@ export default function Episodes() {
   const ep = EPISODES[active];
 
   return (
-    <section className="bg-white py-10 md:py-14">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8">
+    <section className="ep-section">
+      <style dangerouslySetInnerHTML={{ __html: episodesStyles }} />
+      <div className="ep-inner">
 
-        {/* Heading */}
-        <h2
-          className="font-medium mb-5 md:mb-6"
-          style={{ fontSize: '36px', lineHeight: '39px', letterSpacing: '-0.02em', color: '#050565' }}
-        >
-          Episodes
-        </h2>
+        <h2 className="ep-heading">Episodes</h2>
 
-        {/* ── Desktop layout: side-by-side at fixed height ── */}
-        <div className="hidden md:flex gap-[15px]" style={{ height: '521px' }}>
+        {/* ── Desktop ── */}
+        <div className="ep-desktop">
 
-          {/* Large video */}
-          <div className="relative flex-1 rounded-[6px] overflow-hidden bg-black">
-            <img
-              src={active === 0 ? '/ep1-thumb.png' : `/ep${active + 1}-thumb.jpg`}
-              alt={ep.title}
-              className="w-full h-full object-cover"
-            />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: 'linear-gradient(180deg, rgba(255,255,255,0) 11.06%, rgba(102,102,102,0.3) 37.5%, rgba(0,0,0,0.55) 86.06%)',
-                mixBlendMode: 'multiply',
-              }}
-            />
-            <div className="absolute bottom-7 left-[52px] right-[52px] flex items-end justify-between">
+          {/* Large card */}
+          <div className="ep-main">
+            <img src={thumbSrc(ep)} alt={ep.title} />
+            <div className="ep-main-overlay" />
+            <div className="ep-main-info">
               <div>
-                <div className="text-white font-bold capitalize" style={{ fontSize: '32px', lineHeight: '31px' }}>
-                  {ep.title}
-                </div>
-                <div className="text-white mt-2" style={{ fontSize: '13px', fontWeight: 300, letterSpacing: '0.05em' }}>
-                  {ep.label}
-                </div>
+                <div className="ep-main-title">{ep.title}</div>
+                <div className="ep-main-label">{ep.label}</div>
               </div>
-              <button
-                className="flex items-center justify-center gap-[10px] text-white font-bold uppercase hover:bg-white hover:text-black transition-colors"
-                style={{ width: '190px', height: '62px', border: '1px solid #FFFFFF', borderRadius: '14px', fontSize: '16px', letterSpacing: '0.02em' }}
-              >
+              <button className="ep-watch-btn">
                 <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
                   <path d="M0 0L12 7L0 14V0Z" fill="currentColor" />
                 </svg>
@@ -84,61 +153,45 @@ export default function Episodes() {
           </div>
 
           {/* Episode list */}
-          <div className="flex flex-col gap-[8px]" style={{ width: '411px' }}>
+          <div className="ep-list">
             {EPISODES.map((episode, i) => (
               <button
                 key={episode.id}
+                className={`ep-item${i === active ? ' active' : ''}`}
                 onClick={() => setActive(i)}
-                className="flex items-center text-left transition-colors rounded-[8px] flex-1 overflow-hidden"
-                style={{ background: i === active ? '#FFEBDB' : 'transparent', paddingLeft: '6px', paddingRight: '12px' }}
               >
-                <div className="relative flex-shrink-0 rounded-[6px] overflow-hidden bg-black" style={{ width: '126px', height: '71px' }}>
-                  <img
-                    src={episode.id === 1 ? '/ep1-thumb.png' : `/ep${episode.id}-thumb.jpg`}
-                    alt={episode.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <PlayCircle />
+                <div className="ep-thumb">
+                  <img src={thumbSrc(episode)} alt={episode.title} />
+                  <div className="ep-play">
+                    <div className="ep-play-circle">
+                      <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
+                        <path d="M0 0L11 6.5L0 13V0Z" fill="black" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
-                <div className="ml-[15px]">
-                  <div className="font-semibold capitalize leading-tight" style={{ fontSize: '18px', color: '#000000' }}>
-                    {episode.title}
-                  </div>
-                  <div className="mt-1" style={{ fontSize: '12px', color: '#666666' }}>
-                    {episode.label}
-                  </div>
+                <div>
+                  <div className="ep-item-title">{episode.title}</div>
+                  <div className="ep-item-label">{episode.label}</div>
                 </div>
               </button>
             ))}
           </div>
         </div>
 
-        {/* ── Mobile layout: stacked ── */}
-        <div className="flex flex-col gap-3 md:hidden">
+        {/* ── Mobile ── */}
+        <div className="ep-mobile">
 
-          {/* Large video */}
-          <div className="relative w-full rounded-[6px] overflow-hidden bg-black" style={{ height: '240px' }}>
-            <img
-              src={active === 0 ? '/ep1-thumb.png' : `/ep${active + 1}-thumb.jpg`}
-              alt={ep.title}
-              className="w-full h-full object-cover"
-            />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: 'linear-gradient(180deg, rgba(255,255,255,0) 30%, #000000 100%)',
-                mixBlendMode: 'multiply',
-              }}
-            />
-            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-2">
+          {/* Large card */}
+          <div className="ep-mobile-main">
+            <img src={thumbSrc(ep)} alt={ep.title} />
+            <div className="ep-mobile-overlay" />
+            <div className="ep-mobile-info">
               <div>
-                <div className="text-white font-bold capitalize text-xl leading-tight">{ep.title}</div>
-                <div className="text-white/80 text-xs mt-1" style={{ fontWeight: 300 }}>{ep.label}</div>
+                <div className="ep-mobile-title">{ep.title}</div>
+                <div className="ep-mobile-label">{ep.label}</div>
               </div>
-              <button
-                className="flex-shrink-0 flex items-center justify-center gap-2 text-white font-bold uppercase text-xs hover:bg-white hover:text-black transition-colors px-3"
-                style={{ height: '44px', border: '1px solid #FFFFFF', borderRadius: '10px', letterSpacing: '0.05em' }}
-              >
+              <button className="ep-mobile-btn">
                 <svg width="10" height="12" viewBox="0 0 12 14" fill="none">
                   <path d="M0 0L12 7L0 14V0Z" fill="currentColor" />
                 </svg>
@@ -147,36 +200,27 @@ export default function Episodes() {
             </div>
           </div>
 
-          {/* Episode list — horizontal scroll on mobile */}
-          <div className="flex flex-row gap-2 overflow-x-auto scrollbar-hide pb-1">
+          {/* Horizontal scroll list */}
+          <div className="ep-scroll">
             {EPISODES.map((episode, i) => (
               <button
                 key={episode.id}
+                className={`ep-scroll-item${i === active ? ' active' : ''}`}
                 onClick={() => setActive(i)}
-                className="flex-shrink-0 flex items-center gap-2 rounded-[8px] overflow-hidden transition-colors"
-                style={{
-                  background: i === active ? '#FFEBDB' : '#F5F5F5',
-                  width: '220px',
-                  height: '72px',
-                  paddingLeft: '6px',
-                  paddingRight: '8px',
-                }}
               >
-                <div className="relative flex-shrink-0 rounded-[6px] overflow-hidden bg-black" style={{ width: '100px', height: '60px' }}>
-                  <img
-                    src={episode.id === 1 ? '/ep1-thumb.png' : `/ep${episode.id}-thumb.jpg`}
-                    alt={episode.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <PlayCircle size={28} />
+                <div className="ep-scroll-thumb">
+                  <img src={thumbSrc(episode)} alt={episode.title} />
+                  <div className="ep-scroll-play">
+                    <div className="ep-scroll-circle">
+                      <svg width="9" height="11" viewBox="0 0 11 13" fill="none">
+                        <path d="M0 0L11 6.5L0 13V0Z" fill="black" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
-                <div className="min-w-0">
-                  <div className="font-semibold capitalize leading-tight text-[13px] truncate" style={{ color: '#000000' }}>
-                    {episode.title}
-                  </div>
-                  <div className="mt-0.5 text-[11px]" style={{ color: '#666666' }}>
-                    {episode.label}
-                  </div>
+                <div>
+                  <div className="ep-scroll-title">{episode.title}</div>
+                  <div className="ep-scroll-label">{episode.label}</div>
                 </div>
               </button>
             ))}
