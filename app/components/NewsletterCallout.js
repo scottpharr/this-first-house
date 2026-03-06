@@ -1,26 +1,26 @@
 export default function NewsletterCallout() {
   return (
-    <section style={{ background: '#EEEEF6' }} className="py-10 md:py-12">
+    <section className="py-10 md:py-12" style={{ background: '#ffffff' }}>
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
         <div
-          className="bg-white flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16"
-          style={{ borderRadius: '16px', padding: '40px 48px' }}
+          className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16"
+          style={{ background: '#EEEEF6', borderRadius: '16px', padding: '48px 56px' }}
         >
           {/* Left: text */}
           <div className="flex-1 min-w-0">
             <h2
               className="font-bold"
-              style={{ fontSize: '22px', lineHeight: '1.2', color: '#050565' }}
+              style={{ fontSize: '24px', lineHeight: 1.2, color: '#050565' }}
             >
               Subscribe To Our Newsletter
             </h2>
             <p
               className="mt-3"
-              style={{ fontSize: '14px', lineHeight: '1.55', color: '#666666', maxWidth: '400px' }}
+              style={{ fontSize: '14px', lineHeight: 1.55, color: '#444444', maxWidth: '420px' }}
             >
               From DIY tips to pro advice, discover the tools, project tutorials,
               and product reviews that keep your home running smoothly, plus get
-              weekly updates from the This Old House TV crew.
+              weekly updates from the This First House crew.
             </p>
           </div>
 
@@ -30,25 +30,26 @@ export default function NewsletterCallout() {
               <input
                 type="email"
                 placeholder="Enter Your Email Address"
-                className="outline-none border w-full sm:w-[280px]"
+                className="outline-none w-full sm:w-[320px]"
                 style={{
-                  height: '52px',
-                  borderRadius: '10px',
-                  borderColor: '#DDDDDD',
-                  padding: '0 18px',
+                  height: '56px',
+                  borderRadius: '12px',
+                  border: '1px solid #D8D8E8',
+                  background: '#ffffff',
+                  padding: '0 20px',
                   fontSize: '14px',
                   color: '#333',
                 }}
               />
               <button
-                className="flex items-center justify-center gap-[10px] text-white font-bold uppercase hover:opacity-90 transition-opacity flex-shrink-0"
+                className="flex items-center justify-center gap-3 text-white font-bold uppercase hover:opacity-90 transition-opacity flex-shrink-0"
                 style={{
-                  height: '52px',
-                  padding: '0 28px',
+                  height: '56px',
+                  padding: '0 32px',
                   background: '#11114A',
-                  borderRadius: '10px',
+                  borderRadius: '12px',
                   fontSize: '13px',
-                  letterSpacing: '0.06em',
+                  letterSpacing: '0.07em',
                 }}
               >
                 <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
@@ -57,12 +58,12 @@ export default function NewsletterCallout() {
                 Subscribe
               </button>
             </div>
-            <p style={{ fontSize: '11px', color: '#AAAAAA', lineHeight: '1.5' }}>
+            <p style={{ fontSize: '11px', color: '#888888', lineHeight: 1.5 }}>
               By submitting your email, you agree to our{' '}
               <a href="#" className="underline hover:text-gray-600 transition-colors">Terms</a>
               {' '}and{' '}
               <a href="#" className="underline hover:text-gray-600 transition-colors">Privacy Notice</a>.
-              {' '}You can opt-out at any time.
+              {' '}You can opt out at any time.
             </p>
           </div>
         </div>
