@@ -1,6 +1,15 @@
 import { getArticleBySlug, getAllArticles } from '@/lib/wordpress';
 import HomeNav from '@/app/components/HomeNav';
 import Footer from '@/app/components/Footer';
+import BrightcovePlayer from '@/components/BrightcovePlayer';
+
+// Inside your ArticlePage component:
+<BrightcovePlayer
+  videoId={article.brightcoveVideoId}
+  accountId="6314471934001"
+  playerId="default"
+  thumbnail={article.featuredImage?.node?.sourceUrl}
+/>
 
 const articleStyles = `
   .article-content { color: #222; font-size: 15px; line-height: 1.65; }
