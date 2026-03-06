@@ -52,7 +52,7 @@ export default function LearnPage() {
       <HomeNav active="Learn" />
 
       {/* ── Hero ── */}
-      <section className="relative w-full overflow-hidden" style={{ height: '450px', background: '#11114A' }}>
+      <section className="relative w-full overflow-hidden" style={{ height: '564px', background: '#11114A' }}>
 
         {/* Background image */}
         <img
@@ -68,7 +68,7 @@ export default function LearnPage() {
         />
 
         {/* Hero text — 129px from left, 241px from top */}
-        <div className="absolute" style={{ left: '129px', top: '241px' }}>
+        <div className="absolute" style={{ left: '129px', bottom: '60px' }}>
           <h1 className="text-white font-bold" style={{ fontSize: '56px', lineHeight: 1.05 }}>
             Learn
           </h1>
