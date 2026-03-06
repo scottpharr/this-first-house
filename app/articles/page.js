@@ -71,13 +71,14 @@ export default async function LearnPage() {
       <main className="bg-white" style={{ color: '#222222' }}>
 
         {/* ── Category jump links ── */}
+        <style>{`.cat-link:hover { background: #11114A !important; color: #ffffff !important; border-color: #11114A !important; }`}</style>
         <div className="px-5 md:px-8" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
           <div className="max-w-[1280px] mx-auto flex gap-3 justify-center">
             {categories.map((cat, i) => (
               <a
                 key={cat.id}
                 href={`#${cat.id}`}
-                className="flex items-center justify-center transition-colors text-center"
+                className="cat-link flex items-center justify-center transition-colors text-center"
                 style={{
                   width: '280px',
                   height: '25px',
